@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+E:\COLEGIO\5to 1ra\LPOO\Ec\Trabajos Grupales\Trabajo Calculadora\.metadata\.plugins\org.eclipse.jdt.core
+1601436979.index
+1650449417.index
+1865797976.index
