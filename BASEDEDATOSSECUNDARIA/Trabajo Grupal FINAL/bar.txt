@@ -1,0 +1,330 @@
+DROP DATABASE IF EXISTS SECUNDARIA; 
+CREATE DATABASE SECUNDARIA;
+
+USE SECUNDARIA;
+
+CREATE TABLE SECRETARIA(
+ID_PERSONAL INT PRIMARY KEY AUTO_INCREMENT,
+Cargo VARCHAR(30),
+Nombre_completo VARCHAR(100),
+Edad INT,
+Direccion VARCHAR(100),
+Correo_electronico VARCHAR(100),
+Telefono INT,
+DNI INT NOT NULL UNIQUE,
+Fecha_inicio DATE, 
+Ficha_censal INT,
+Licencias INT,
+Asistencias INT
+);
+
+CREATE TABLE DOCENTES(
+ID_DOCENTE INT PRIMARY KEY AUTO_INCREMENT,
+ID_PERSONAL INT NOT NULL,
+FOREIGN KEY (ID_PERSONAL) REFERENCES secretaria (ID_PERSONAL)
+);
+
+CREATE TABLE ASIGNATURAS(
+ID_ASIGNATURA INT PRIMARY KEY AUTO_INCREMENT,
+Nombre_asignatura VARCHAR(50),
+ID_DOCENTE INT NOT NULL,
+FOREIGN KEY (ID_DOCENTE) REFERENCES docentes (ID_DOCENTE)
+);
+
+CREATE TABLE CURSOS(
+ID_CURSO INT PRIMARY KEY AUTO_INCREMENT,
+Año INT,
+Division INT,
+Turno VARCHAR(15),
+Numero_Alumnos INT
+);
+
+CREATE TABLE CURSO_ASIGNADO(
+ID_CURSO_ASIGNADO INT PRIMARY KEY AUTO_INCREMENT,
+ID_DOCENTE INT NOT NULL,
+FOREIGN KEY (ID_DOCENTE) REFERENCES docentes (ID_DOCENTE),
+ID_CURSO INT NOT NULL,
+FOREIGN KEY (ID_CURSO) REFERENCES cursos (ID_CURSO),
+Asignatura_asignada VARCHAR(50)
+);
+
+CREATE TABLE OFICINA_DE_ALUMNOS(
+ID_OFICINA INT PRIMARY KEY AUTO_INCREMENT,
+Nombre_completo VARCHAR(100),
+Edad INT,
+Direccion VARCHAR(100),
+Correo_electronico VARCHAR(100),
+DNI INT NOT NULL UNIQUE,
+Fecha_nacimiento DATE,
+Nombre_tutor_responsable VARCHAR(100),
+Telefono_tutor_responsable INT
+);
+
+CREATE TABLE ALUMNOS(
+ID_ALUMNO INT PRIMARY KEY AUTO_INCREMENT,
+ID_OFICINA INT NOT NULL,
+FOREIGN KEY (ID_OFICINA) REFERENCES OFICINA_DE_ALUMNOS (ID_OFICINA),
+ID_CURSO INT NOT NULL,
+FOREIGN KEY (ID_CURSO) REFERENCES cursos (ID_CURSO)
+);
+
+CREATE TABLE NOTAS(
+ID_NOTA INT PRIMARY KEY AUTO_INCREMENT,
+ID_ALUMNO INT NOT NULL,
+ID_ASIGNATURA INT NOT NULL,
+1er_bimestre INT,
+2do_bimestre INT,
+1er_cuatrimestre INT,
+3er_bimestre INT,
+4to_bimestre INT,
+2do_cuatrimestre INT,
+1er_cierre INT,
+2do_cierre INT,
+FOREIGN KEY (ID_ALUMNO) REFERENCES alumnos (ID_ALUMNO),
+FOREIGN KEY (ID_ASIGNATURA) REFERENCES asignaturas (ID_ASIGNATURA)
+);
+INSERT INTO `secretaria`(`Cargo`, `Nombre_completo`, `Edad`, `Direccion`, `Correo_electronico`, `Telefono`, `DNI`, `Fecha_inicio`, `Ficha_censal`, `Licencias`, `Asistencias`)
+
+VALUES 
+('Rector','Alfonso Gutierrez','59','Avenida Lope de Vega 1592','alfonsooo@hotmail.com','11242211','2527869','2007-07-27','58153',NULL,'100'),
+('Vicerrector','Pedro Kafka','60','Avenida San Martin 9000','pedrokaf@hotmail.com','11512790','24925601','2012-03-01','55379','10','90'),
+('Secretario','Maria Mariana Lanza','52','Cervantez 3789','LML@gmail.com','11890213','28765432','2009-11-21','70379','20','80'),
+('Regente','Matias Sulca','42','New York 8790','LML@gmail.com','11934563','32765432','2009-08-24','68379','4','96'),
+('Profesor','Ignacio Sarale','37','Avenida Salvador Maria del Carril','Igna@gmail.com','11874253','44324689','2019-10-31','108379','2','98'),
+('Profesor','Rodolfo Decurgez','66','Baigorria 7894','Dec@gmail.com','11324689','23256012','1995-11-09','10379','7','93'),
+('Profesor','Francisca Roberti','25','Bermudez 2142','FR@gmail.com','11564302','43152781','2022-07-19','110379','1','99'),
+('Profesor','Lorena Marta Roca','44','Virgilio 7642','LoreMar@hotmail.com','11346223','33856801','2010-03-30','40379',NULL,'100'),
+('Profesor','Anahi Ozores','67','Avenida Lastra 1234','ana@hotmail.com','11246567','23105601','1995-12-05','12450','5','95'),
+('Profesor','Julian Perez','30','Monte Castro 2991','Juli@hotmail.com','11123409','40056401','2015-01-15','80871','2','98'),
+('Profesor','Lola Fierro','31','Avenida Lope de Vega 1300','lolafierro@gmail.com','11096792','40959601','2013-04-21','75871','11','89'),
+('Profesor','Lautaro Sosa Lanza','51','Quevedo 2328','lautisosa@gmail.com','11212317','27785601','2023-05-10','55871',NULL,'100'),
+('Profesor','Joaquin Lozano','23','Avenida Rivadavia 6789','jl@hotmail.com','11085391','42531344','2021-08-29','99345','1','99'),
+('Profesor','Lionel Messi','43','Avenida Corrientes 10789','Messi@gmail.com','11345678','32319874','2011-02-13','80649','8','92'),
+('Profesor','Gonzalo Mendez','39','Vicente Lopez 3280','vicens@gmail.com','11426243','44913044','2012-12-14','62349','18','82'),
+('Profesor','Fernando Louro','41','Avenida Lope de Vega 3131','ferrnan@gmail.com','11852242','33014778','2016-09-29','89245','14','86'),
+('Profesor','Antonio Penalba','63','Florida 1238','antpenal@gmail.com','11745432','25835444','2003-04-07','53145','12','88'),
+('Profesor','Julieta Lizarraga','33','Avenida Rivadavia 8901','juli@hotmail.com','11890797','45135214','2022-01-23','100112','2','98'),
+('Profesor','Diego Maradona','59','Ecuador 3214','diego@gmail.com','11753232','24865432','1997-02-10','30649',NULL,'100'),
+('Profesor','Sofia Gomez','32','Gualeguaychú 3280','sogomez@gmail.com','11537699','45214137','2020-01-14','112349','20','80'),
+('Profesor','Santino Rivero','22','Avenida Rivadavia 1252','santiriv@hotmail.com','11142643','42745210','2024-07-22','124312',NULL,'100'),
+('Guardia','Tatiana Roque','52','Allende 4123','tati@hotmail.com','11124655','28934798','2001-01-01','33349','10','90'),
+('Auxiliar de limpieza','Tiago Tapia Gallardo','29','Chivilcoy 8731','tt@gmail.com','11666342','41913544','2017-02-02','92349','6','94'),
+('Auxiliar de limpieza','Guadalupe Colombo','60','Alcaraz 7987','pablo@hotmail.com','11900845','24395792','1998-01-27','42349','9','91'),
+('Portero','Agustina Rodriguez','40','Lavalle 3134','agustinarodriguez@hotmail.com','11234867','30321009','2014-02-06','75332','2','98');
+
+
+INSERT INTO `docentes`(`ID_PERSONAL`)
+VALUES 
+('5'),
+('6'),
+('7'),
+('8'),
+('9'),
+('10'),
+('11'),
+('12'),
+('13'),
+('14'),
+('15'),
+('16'),
+('17'),
+('18'),
+('19'),
+('20'),
+('21');
+
+
+INSERT INTO `asignaturas`(`Nombre_asignatura`, `ID_DOCENTE`)
+VALUES 
+('Lengua','5'),
+('Lengua','17'),
+('Lengua','3'), 
+('Matematica','7'),
+('Matematica','2'),
+('Matematica','9'),
+('Biologia','12'),
+('Biologia','13'),
+('Historia','1'),
+('Historia','6'),
+('Historia','9'),
+('Historia','11'),
+('Geografia','15'),
+('Geografia','17'), 
+('Quimica','3'),
+('Quimica','16'), 
+('Fisica','5'),
+('Fisica','8'),
+('Fisica','4'),
+('Educacion fisica','2'),
+('Educacion fisica','17'),
+('Educacion fisica','14'),
+('Civica','9'),
+('Civica','10'),
+('Ingles','7'),
+('Ingles','13'),
+('Ingles','6');
+
+
+INSERT INTO `cursos`(`Año`, `Division`, `Turno`, `Numero_Alumnos`)
+VALUES
+('1','1','Mañana','2'),
+('1','2','Tarde','3'),
+('2','1','Mañana','2'),
+('2','2','Tarde','2'),
+('3','1','Mañana','2'),
+('3','2','Tarde','3'),
+('4','1','Tarede','2'),
+('4','2','Noche','3'),
+('5','1','Tarde','2'),
+('5','2','Noche','2');
+
+
+
+INSERT INTO `curso_asignado`(`ID_DOCENTE`, `ID_CURSO`, `Asignatura_asignada`) 
+VALUES
+('5','1','Lengua'),
+('7','1','Matematica'),
+('13','1','Biologia'),
+('1','1','Historia'),
+('17','1','Geografia'),
+('3','1','Quimica'),
+('5','1','Fisica'),
+('2','1','Educacion fisica'),
+('9','1','Civica'),
+('6','1','Ingles'),
+('3','2','Lengua'),
+('2','2','Matematica'),
+('12','2','Biologia'),
+('9','2','Historia'),
+('17','2','Geografia'),
+('16','2','Quimica'),
+('4','2','Fisica'),
+('17','2','Educacion fisica'),
+('10','2','Civica'),
+('6','2','Ingles'),
+('3','3','Lengua'),
+('2','3','Matematica'),
+('12','3','Biologia'),
+('11','3','Historia'),
+('15','3','Geografia'),
+('16','3','Quimica'),
+('5','3','Fisica'),
+('2','3','Educacion fisica'),
+('9','3','Civica'),
+('13','3','Ingles'),
+('17','4','Lengua'),
+('9','4','Matematica'),
+('12','4','Biologia'),
+('11','4','Historia'),
+('17','4','Geografia'),
+('16','4','Quimica'),
+('8','4','Fisica'),
+('14','4','Educacion fisica'),
+('9','4','Civica'),
+('7','4','Ingles'),
+('5','5','Lengua'),
+('9','5','Matematica'),
+('13','5','Biologia'),
+('9','5','Historia'),
+('15','5','Geografia'),
+('3','5','Quimica'),
+('4','5','Fisica'),
+('14','5','Educacion fisica'),
+('10','5','Civica'),
+('13','5','Ingles'),
+('5','6','Lengua'),
+('9','6','Matematica'),
+('13','6','Biologia'),
+('9','6','Historia'),
+('15','6','Geografia'),
+('3','6','Quimica'),
+('4','6','Fisica'),
+('2','6','Educacion fisica'),
+('9','6','Civica'),
+('7','6','Ingles'),
+('17','7','Lengua'),
+('7','7','Matematica'),
+('12','7','Biologia'),
+('1','7','Historia'),
+('17','7','Geografia'),
+('16','7','Quimica'),
+('4','7','Fisica'),
+('17','7','Educacion fisica'),
+('10','7','Civica'),
+('7','7','Ingles'),
+('3','8','Lengua'),
+('2','8','Matematica'),
+('13','8','Biologia'),
+('1','8','Historia'),
+('15','8','Geografia'),
+('16','8','Quimica'),
+('8','8','Fisica'),
+('2','8','Educacion fisica'),
+('9','8','Civica'),
+('13','8','Ingles'),
+('3','9','Lengua'),
+('2','9','Matematica'),
+('12','9','Biologia'),
+('6','9','Historia'),
+('15','9','Geografia'),
+('3','9','Quimica'),
+('8','9','Fisica'),
+('14','9','Educacion fisica'),
+('9','9','Civica'),
+('6','9','Ingles'),
+('17','10','Lengua'),
+('9','10','Matematica'),
+('12','10','Biologia'),
+('11','10','Historia'),
+('15','10','Geografia'),
+('3','10','Quimica'),
+('5','10','Fisica'),
+('17','10','Educacion fisica'),
+('10','10','Civica'),
+('7','10','Ingles');
+
+
+
+INSERT INTO `oficina_de_alumnos`
+(`Nombre_completo`, `Edad`, `Direccion`, `Correo_electronico`, `DNI`, `Fecha_nacimiento`, `Nombre_tutor_responsable`, `Telefono_tutor_responsable`) 
+VALUES 
+('Federico Santos','12','Monte Castro 3600','fedesanto@gmail.com','51056896','2012/03/17','Maria Santos','11030417'),
+('Joaquin Ledesma','17','Baigorria 4523','joacolesma@gmail.com','47321643','2007/01/10','Pedro Alfonso Ledesma','11245578'),
+('Lucas Santos','15','Monte Castro 3600','lucascrack@hotmail.com','49567312','2009/08/02','Maria Santos','11030417'),
+('Lucia Leanza','18','New York 8894','lulilanza@gmail.com','46424411','2006/07/13','Tiziano Leanza','11432212'),
+('Macarena Rivero','14','Quevedo 4512','Macuriv@hotmail.com','49314545','2010/01/16','Juan Rivero','11798134'),
+('Francisco Pecile','13','Benitos Juarez 5327','skibiditoilet@gmail.com','50321718','2011/05/04','Esteban Peñaloza','11245816'),
+('Damian Fontan','17','Hawai 3076','damifon@gmail.com','47873539','2007/9/15','Yazmin Fontan','117659403'),
+('Marco Lozano','15','Allende 1215','marcoooooo@hotmail.com','49335549','2009/05/30','Micaela Lozano','11094328'),
+('Fatima Sosa','16','Mercedes 5432','fatisosasosa@hotmail.com','50809442','2008/08/02','Tatiana Sosa','11882431'),
+('Miguel Louro','14','Naciones Unidas 1005','migueprocapocrack@gmail.com','49835320','2010/05/19','Mario Louro','11222211'),
+('Manuel Louro','14','Naciones Unidas 1005','manueprocapocrack@gmail.com','49835321','2010/05/19','Mario Louro','11222211');
+
+
+INSERT INTO `alumnos`
+(`ID_OFICINA`, `ID_CURSO`) VALUES
+(1,1),
+(2,9),
+(3,6),
+(4,7),
+(5,4),
+(6,2),
+(7,10),
+(8,8),
+(9,3),
+(10,5),
+(11,5);
+
+
+INSERT INTO `notas`
+(`ID_ALUMNO`, `ID_ASIGNATURA`, `1er_bimestre`, `2do_bimestre`, `1er_cuatrimestre`, `3er_bimestre`, `4to_bimestre`, `2do_cuatrimestre`, `1er_cierre`, `2do_cierre`) VALUES 
+('1','1','5','6','5','2','6','4','4','7'),
+('1','2','7','6','6','5','5','5','5','5'),
+('1','3','8','9','8','6','10','8','8',NULL),
+('1','4','10','10','10','9','10','9','9',NULL),
+('1','5','4','6','5','9','6','7','6',NULL),
+('1','6','6','5','5','7','7','7','6',NULL),
+('1','7','9','10','9','8','8','8','8',NULL),
+('1','8','7','5','6','6','8','7','6',NULL),
+('1','9','6','6','6','5','4','4','5','8'),
+('1','10','8','8','8','7','7','7','7',NULL);
